@@ -14,6 +14,7 @@ in {
   home.file.".bashrc".text = builtins.readFile ../.rc/.bashrc;
   home.sessionVariables = {
     KUBE_EDITOR = "nvim";
+    GIT_CONFIG_GLOBAL = "$HOME/.config/git/config";
   };
 
   home.packages = with pkgs; [
