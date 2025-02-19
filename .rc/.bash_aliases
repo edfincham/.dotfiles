@@ -1,0 +1,27 @@
+# bare repo in ~
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+alias ri3='i3-msg restart > /dev/null'
+alias hsplit='tmux split-window -h'
+alias vsplit='tmux split-window -v'
+alias vim='nvim'
+alias tf='terraform'
+alias tg='terragrunt'
+alias tgcf='find . -type d -name ".terragrunt-cache"'
+alias tgrmc='find . -type d -name ".terragrunt-cache" -prune -exec rm -rf {} \;'
+alias tgfmt='terragrunt hclfmt'
+alias tga='terragrunt apply'
+alias tgp='terragrunt plan'
+alias tgo='terragrunt output'
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias myip='curl ipinfo.io'
+alias dprune="docker images | grep none | awk '{ print $3; }' | xargs docker rmi"
+
+# git
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.ci commit
+git config --global alias.st status

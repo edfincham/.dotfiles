@@ -1,0 +1,17 @@
+shopt -s histappend
+
+HISTFILE=$HOME/.bash_history
+HISTSIZE=-1
+HISTFILESIZE=-1
+
+# Ignore commands that start with spaces
+# Ignore duplicates
+# Erase duplicates from the list
+HISTCONTROL=ignorespace:ignoredups:erasedups
+
+# Ignore sensitive and boring commands
+HISTIGNORE="password:password_old:history:ls:pwd:sd:cd"
+
+# Enable fuzzy search
+#   See repo for installation: https://github.com/junegunn/fzf.git
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

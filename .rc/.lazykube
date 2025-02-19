@@ -1,0 +1,41 @@
+alias k="kubectl"
+alias kns="kubens"
+alias kctx="kubectx"
+
+complete -F _complete_alias kubectl
+
+# sort output of a kubectl command by creation timestamp
+alias ksort='kubectl --sort-by=.metadata.creationTimestamp '
+
+# create a pod and ssh into it it and delete it after workds
+krun () {
+    kubectl run --image $1 -i --tty --rm --restart=Never debuggyboi -- sh
+}
+
+# see list of all pods running on a given node
+knode () {
+    kubectl get pods --all-namespaces -o wide --field-selector spec.nodeName=$1
+}
+
+# ssh into existing pod. to specify a container pass --container $NAME
+ksh () { 
+    if [[ -z "$1" ]]; then
+        echo "No pod specified";
+        return 1;
+    fi;
+    POD_NAME=$1;
+    shift;
+    kubectl exec --stdin --tty $POD_NAME $@ -- /bin/sh
+}
+
+_kubepod_completions() {
+    if [ "${#COMP_WORDS[@]}" != "2" ]; then
+        return
+    fi
+    KUBEPODTEMPLATE='{{ range .items}}{{.metadata.name}} {{end}}'
+    PODS=$(kubectl get pods --template "$KUBEPODTEMPLATE")
+
+    COMPREPLY=($(compgen -W "$PODS" "${COMP_WORDS[1]}"))
+}
+
+complete -F _kubepod_completions ksh
