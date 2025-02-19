@@ -34,6 +34,7 @@ in {
     mesa-demos
     neovim
     openssh
+    pinentry-gnome3
     stern
     # terraform
     # terragrunt

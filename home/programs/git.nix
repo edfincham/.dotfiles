@@ -4,9 +4,10 @@
   userEmail = "ed.fincham@proton.me";
 
   signing = {
-    key = "/home/${username}/.ssh/id_ed25519.pub";
+    #key = "/home/${username}/.ssh/id_ed25519";
+    key = "B7275250D05DCC24";
     signByDefault = true;
-    format = "ssh";
+    format = "openpgp";
   };
 
   extraConfig = {
@@ -14,14 +15,16 @@
       editor = "nvim";
       pager = "less";
     };
-    delta.navigate = true;
     merge.conflictstyle = "diff3";
     diff.colorMoved = "default";
 
-    user.signingkey = "~/.ssh/id_ed25519.pub";
-    gpg.format = "ssh";
+    # create allowed_signers file and run:
+    #   $ echo "ed25519 $(cat ~/.ssh/id_ed25519.pub)" > ~/.ssh/allowed_signers
+    #gpg.format = "ssh";
+    #gpg.ssh.allowedSignersFile = "/home/${username}/.ssh/allowed_signers";
     commit.gpgsign = true;
     tag.gpgsign = true;
+    gpg.program = "gpg";
 
     alias = {
       standup = ''
@@ -51,6 +54,11 @@
             --author="$(git config user.name)\|$(git config user.email)" \
             --all -i --pretty=format: --name-only | \
             sort | uniq -c | sort -rn | head -10'';
+
+      co = "checkout";
+      st = "status";
+      ci = "commit";
+      br = "branch";
     };
 
     "includeIf \"gitdir:~/northvolt/\"" = {
