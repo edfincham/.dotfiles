@@ -21,7 +21,7 @@ deps:
 	@command nix --version >/dev/null 2>&1 || echo "Install Nix: curl -L https://nixos.org/nix/install | sh"
 
 .PHONY: init
-CONFIGS := i3
+CONFIGS := i3 nvim
 init:
 	@echo "Initializing dotfile symlinks.. ${CONFIGS}"
 	@for c in $(CONFIGS); do \

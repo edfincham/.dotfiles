@@ -47,11 +47,11 @@ in {
   services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
 
   # packages managed outside home-manager
-  xdg.configFile.nvim = {
-    source = mkOutOfStoreSymlink
-      "../.rc/.vimrc";
-    force = true;
-  };
+  #xdg.configFile.nvim = {
+  #  source = mkOutOfStoreSymlink
+  #    "../.config/nvim/init.vim";
+  #  force = true;
+  #};
 
   programs = {
     fzf = import ./programs/fzf.nix { inherit pkgs; };
