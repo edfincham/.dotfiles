@@ -12,6 +12,9 @@ in {
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "24.11";
   home.file.".bashrc".text = builtins.readFile ../.rc/.bashrc;
+  home.sessionVariables = {
+    KUBE_EDITOR = "nvim";
+  };
 
   home.packages = with pkgs; [
     clipmenu

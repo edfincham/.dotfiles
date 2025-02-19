@@ -52,7 +52,10 @@ export PATH=$PATH:/usr/local/go/bin
 export KUBECONFIG="$HOME/.kube/config"
 # export KUBECONFIG="$KUBECONFIG:$HOME/.kube/config-rpi-k3s"
 
-. ~/.nix-profile/etc/profile.d/nix.sh
+# nix
+[ -f ~/.nix-profile/etc/profile.d/nix.sh ] && source ~/.nix-profile/etc/profile.d/nix.sh
+[ -f ~/.nix-profile/etc/profile.d/hm-session-vars.sh ] && source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+
 . ~/.dotfiles/.rc/.history_conf
 . ~/.dotfiles/.rc/.bash_aliases
 . ~/.dotfiles/.rc/.lazykube
