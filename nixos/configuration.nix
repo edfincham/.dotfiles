@@ -34,7 +34,9 @@
     LC_TIME = "sv_SE.UTF-8";
   };
 
-  # Enable Blueman for Bluetooth
+  # Enable Bluetooth and Bluetooth manager
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
   # Configure i3 and X11
@@ -76,12 +78,14 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    alsa-utils
     feh
     firefox
     ghostty
     git
     gnumake
     neovim
+    networkmanagerapplet
     openssh
     picom
     rofi
@@ -104,6 +108,7 @@
   #   enableSSHSupport = true;
   # };
   programs.gnome-disks.enable = true;
+  programs.nm-applet.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
