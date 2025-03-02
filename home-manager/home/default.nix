@@ -21,10 +21,12 @@ in {
     clipmenu
     fd
     fzf
+    imagemagick
     go
     keepassxc
     kubectl
     kubectx
+    scrot
     stern
     # terraform
     # terragrunt

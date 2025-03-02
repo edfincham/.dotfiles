@@ -76,12 +76,12 @@ gaps inner 20
 gaps outer 5
 
 # Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q -D pulse set Master 5%+ unmute
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q -D pulse set Master 5%- unmute 
-bindsym XF86AudioMute exec --no-startup-id amixer -q -D pulse sset Master toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 5%+ unmute
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q set Master 5%- unmute 
+bindsym XF86AudioMute exec --no-startup-id amixer -q set Master toggle
 
 # Mic controls
-bindsym XF86AudioMicMute exec --no-startup-id amixer -q -D pulse sset Capture toggle
+bindsym XF86AudioMicMute exec --no-startup-id amixer -q set Capture toggle
 
 # Screen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
@@ -97,7 +97,7 @@ bindsym --release Print exec --no-startup-id "maim ~/Desktop/$(date +%Y-%m-%dT%H
 bindsym --release Control+Print exec --no-startup-id "maim -s ~/Desktop/$(date +%Y-%m-%dT%H:%M:%S).png"
 
 # Custom Keybinds
-bindsym $mod+f exec --no-startup-id yazi
+bindsym $mod+f exec --no-startup-id ghostty -e yazi
 bindsym $mod+b exec --no-startup-id firefox
 bindsym $mod+Tab exec rofi -show window
 bindsym $mod+Shift+s exec --no-startup-id gnome-control-center
