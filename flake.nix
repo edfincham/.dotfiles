@@ -30,7 +30,7 @@
         inherit pkgs;
         extraSpecialArgs = { inherit inputs; };
         modules = [
-          ./home/default.nix
+          ./home-manager/home/default.nix
         ];
       };
     };

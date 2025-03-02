@@ -30,7 +30,7 @@ fi
 
 export PATH=$PATH:/usr/local/go/bin
 
-. ~/.dotfiles/.rc/.history_conf
-. ~/.dotfiles/.rc/.bash_aliases
-. ~/.dotfiles/.rc/.lazykube
+. ~/.dotfiles/home-manager/.rc/.history_conf
+. ~/.dotfiles/home-manager/.rc/.bash_aliases
+. ~/.dotfiles/home-manager/.rc/.lazykube
 # . ~/Dropbox/synced_documents/computer_setup/.bashrc_dropbox
