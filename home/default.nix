@@ -20,33 +20,22 @@ in {
   home.packages = with pkgs; [
     clipmenu
     fd
-    feh
     fzf
-    htop
-    i3
     go
     keepassxc
     kubectl
     kubectx
-    libglvnd
-    maim
-    mesa
-    mesa-demos
-    neovim
-    openssh
-    pinentry-gnome3
     stern
     # terraform
     # terragrunt
-    tree
 
     inputs.nixpkgs-poetry-1_8_5.legacyPackages.${pkgs.system}.poetry
   ];
 
   # services
   services.blueman-applet.enable = true;
-  services.gnome-keyring = import ./services/gnome-keyring.nix { inherit pkgs; };
-  services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
+  # services.gnome-keyring = import ./services/gnome-keyring.nix { inherit pkgs; };
+  # services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
 
   # packages managed outside home-manager
   #xdg.configFile.nvim = {
@@ -62,7 +51,8 @@ in {
     go = import ./programs/go.nix { inherit pkgs; };
     gpg = { enable = true; };
     jq = { enable = true; };
-    neovim = import ./programs/neovim.nix { inherit pkgs; };
+    # neovim = import ./programs/neovim.nix { inherit pkgs; };
     ssh = import ./programs/ssh.nix { inherit pkgs; };
+    yazi = import ./programs/yazi.nix { inherit pkgs; };
   };
 }

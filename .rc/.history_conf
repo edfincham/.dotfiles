@@ -14,4 +14,4 @@ HISTIGNORE="password:password_old:history:ls:pwd:sd:cd"
 
 # Enable fuzzy search
 #   See repo for installation: https://github.com/junegunn/fzf.git
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# [ -f ~/.fzf.bash ] && source ~/.fzf.bash
