@@ -26,7 +26,7 @@ init:
 	@echo "Initializing dotfile symlinks.. ${CONFIGS}"
 	@for c in $(CONFIGS); do \
 		[ -d ~/.config/$$c ] && rm -rf ~/.config/$$c || true; \
-		ln -sf $(PWD)/.config/$$c ~/.config/$$c; \
+		ln -sf $(PWD)/home-manager/.config/$$c ~/.config/$$c; \
 	done
 
 .PHONY: rebuild

@@ -16,10 +16,10 @@ curl -L https://nixos.org/nix/install | sh
 git clone git@github.com:edfincham/.dotfiles.git
 ```
 
-3. Initialise nix:
+3. Initialise home-manager:
 
 ```bash
-nix run home-manager/master --extra-experimental-features 'nix-command flakes' -- init --switch
+nix run home-manager/master -- init --switch
 ```
 
 4. Setup dotfile symlinks and build system:
