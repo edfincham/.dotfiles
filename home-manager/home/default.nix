@@ -20,6 +20,7 @@ in {
 
   home.packages = with pkgs; [
     clipmenu
+    code-cursor
     fd
     fzf
     imagemagick

@@ -48,8 +48,8 @@
       extraPackages = with pkgs; [
         dmenu
         i3status
-	i3lock
-	i3blocks
+	    i3lock
+    	i3blocks
       ];
     };
     xkb = {
@@ -79,6 +79,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alsa-utils
+    dpkg
     feh
     firefox
     ghostty
@@ -89,6 +90,7 @@
     openssh
     picom
     rofi
+    slack
     tree
     unzip
     wget

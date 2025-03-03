@@ -23,7 +23,7 @@ bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id dmenu_run -i -fn 'Roboto Condensed' -nb '#181818' -sf '#1793d0' -sb '#151515'
 
 # Clipboard
-bindsym $mod+c exec --no-startup-id clipmenu -fn 'Roboto Condensed' -nb '#181818' -sf '#1793d0' -sb '#151515'
+#bindsym $mod+c exec --no-startup-id clipmenu -fn 'Roboto Condensed' -nb '#181818' -sf '#1793d0' -sb '#151515'
 
 # Monitors
 set $monitor1 "eDP-1" # internal screen
@@ -89,6 +89,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease
 
 exec --no-startup-id ~/.dropbox-dist/dropboxd &
 exec --no-startup-id i3-msg 'workspace 1:I; exec keepassxc'
+exec --no-startup-id i3-msg 'workspace 1:I; exec slack'
 exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings
 exec --no-startup-id xset b off
 
@@ -99,6 +100,7 @@ bindsym --release Control+Print exec --no-startup-id "maim -s ~/Desktop/$(date +
 # Custom Keybinds
 bindsym $mod+f exec --no-startup-id ghostty -e yazi
 bindsym $mod+b exec --no-startup-id firefox
+bindsym $mod+c exec --no-startup-id cursor
 bindsym $mod+Tab exec rofi -show window
 bindsym $mod+Shift+s exec --no-startup-id gnome-control-center
 
