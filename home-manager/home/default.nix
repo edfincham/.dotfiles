@@ -4,6 +4,7 @@ let
   inherit (config.lib.file) mkOutOfStoreSymlink;
 in {
   programs.home-manager.enable = true;
+  nixpkgs.config.allowUnfree = true;
 
   xdg.enable = true;
   xdg.configFile."i3/config".source = ../.config/i3/config;
@@ -26,6 +27,10 @@ in {
     keepassxc
     kubectl
     kubectx
+    (python310.withPackages (ps: with ps; [
+      pip
+      numpy
+    ]))
     scrot
     stern
     # terraform
@@ -34,7 +39,7 @@ in {
     inputs.nixpkgs-poetry-1_8_5.legacyPackages.${pkgs.system}.poetry
   ];
 
-  # services
+  # Services
   services.blueman-applet.enable = true;
   # services.gnome-keyring = import ./services/gnome-keyring.nix { inherit pkgs; };
   # services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
@@ -57,4 +62,17 @@ in {
     ssh = import ./programs/ssh.nix { inherit pkgs; };
     yazi = import ./programs/yazi.nix { inherit pkgs; };
   };
+
+  systemd.user.services.dropbox = {
+    Unit = {
+      Description = "Dropbox service";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.dropbox}/bin/dropbox";
+      Restart = "on-failure";
+    };
+};
 }
