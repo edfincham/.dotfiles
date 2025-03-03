@@ -15,6 +15,7 @@ help:
 	@echo "  update                Update both nixpkgs and home-manager"
 	@echo "  clean                 Run garbage collection"
 	@echo "  check                 Check nix flake for errors"
+	@echo "  reboot                Update and reboot NixOS"
 
 .PHONY: deps
 deps:
@@ -64,5 +65,11 @@ clean:
 check:
 	@echo "Checking flake..."
 	nix flake check
+
+.PHONY: reboot
+reboot:
+	@echo "Updating and rebooting NixOS"
+	sudo nixos-rebuild boot --upgrade
+
 
 .DEFAULT_GOAL := help
