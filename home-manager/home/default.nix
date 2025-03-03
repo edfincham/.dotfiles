@@ -35,6 +35,7 @@ in {
     stern
     # terraform
     # terragrunt
+    xclip
 
     inputs.nixpkgs-poetry-1_8_5.legacyPackages.${pkgs.system}.poetry
   ];
