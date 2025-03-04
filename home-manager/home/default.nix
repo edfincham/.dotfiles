@@ -68,5 +68,20 @@ in {
       ExecStart = "${pkgs.dropbox}/bin/dropbox";
       Restart = "on-failure";
     };
-};
+  };
+  systemd.user.services.gnome-keyring = {
+    Unit = {
+      Description = "GNOME Keyring Daemon";
+      PartOf = [ "graphical-session.target" ];
+    };
+
+    Service = {
+      ExecStart = "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --start --foreground --components=pkcs11,secrets,ssh";
+      Restart = "always";
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
 }
