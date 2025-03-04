@@ -11,7 +11,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-bf64ac4a-43d6-47be-9f92-95e76666a599".device = "/dev/disk/by-uuid/bf64ac4a-43d6-47be-9f92-95e76666a599";
-  
+
+  # Networking
   networking.hostName = "nixos";
   networking.wireless.enable = false;  # Disable wpa_supplicant since using networkmanager.
   networking.networkmanager.enable = true;
@@ -68,7 +69,7 @@
   users.users.ed = {
     isNormalUser = true;
     description = "Ed";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker"  "audio" ];
     packages = with pkgs; [];
   };
 
@@ -88,11 +89,13 @@
     neovim
     networkmanagerapplet
     openssh
+    pciutils
     picom
     rofi
     slack
     tree
     unzip
+    wireguard-tools
     wget
   ];
 
