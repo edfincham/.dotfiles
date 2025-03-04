@@ -15,6 +15,20 @@ jwtd () {
   fi
 }
 
+virtualenv_info() {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        echo " (${VIRTUAL_ENV##*/})"
+    fi
+}
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+PS1="\[\e[0;32m\]┌─╼\[\e[m\e[0;34m\] $USER \[\e[m\e[0;36m\]\w\[\e[m\]\[\e[0;33m\]\$(parse_git_branch)\[\e[m\]\[\e[0;31m\]\$(virtualenv_info)\[\e[m\]\n\[\e[0;32m\]└──╼$ \[\e[m\]"
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -27,6 +41,9 @@ if [ -f $HOME/.local/lib/python3.8/site-packages/powerline/bindings/bash/powerli
     POWERLINE_BASH_SELECT=1
     source $HOME/.local/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
 fi
+
+# fzf for command line fuzzy finder
+source $(fzf-share)/key-bindings.bash
 
 export PATH=$PATH:/usr/local/go/bin
 

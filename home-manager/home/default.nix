@@ -46,13 +46,6 @@ in {
   # services.gnome-keyring = import ./services/gnome-keyring.nix { inherit pkgs; };
   # services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
 
-  # packages managed outside home-manager
-  #xdg.configFile.nvim = {
-  #  source = mkOutOfStoreSymlink
-  #    "../.config/nvim/init.vim";
-  #  force = true;
-  #};
-
   programs = {
     fzf = import ./programs/fzf.nix { inherit pkgs; };
     gh = import ./programs/gh.nix { inherit pkgs; };
@@ -60,7 +53,6 @@ in {
     go = import ./programs/go.nix { inherit pkgs; };
     gpg = { enable = true; };
     jq = { enable = true; };
-    # neovim = import ./programs/neovim.nix { inherit pkgs; };
     ssh = import ./programs/ssh.nix { inherit pkgs; };
     yazi = import ./programs/yazi.nix { inherit pkgs; };
   };
