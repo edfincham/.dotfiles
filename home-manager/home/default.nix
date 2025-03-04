@@ -4,6 +4,7 @@ let
   inherit (config.lib.file) mkOutOfStoreSymlink;
 in {
   programs.home-manager.enable = true;
+  nixpkgs.config.allowUnfree = true;
 
   xdg.enable = true;
   xdg.configFile."i3/config".source = ../.config/i3/config;
@@ -19,41 +20,31 @@ in {
 
   home.packages = with pkgs; [
     clipmenu
+    code-cursor
     fd
-    feh
     fzf
-    htop
-    i3
+    imagemagick
     go
     keepassxc
     kubectl
     kubectx
-    libglvnd
-    maim
-    mesa
-    mesa-demos
-    neovim
-    openssh
-    pinentry-gnome3
+    (python310.withPackages (ps: with ps; [
+      pip
+      numpy
+    ]))
+    scrot
     stern
     # terraform
     # terragrunt
-    tree
+    xclip
 
     inputs.nixpkgs-poetry-1_8_5.legacyPackages.${pkgs.system}.poetry
   ];
 
-  # services
+  # Services
   services.blueman-applet.enable = true;
-  services.gnome-keyring = import ./services/gnome-keyring.nix { inherit pkgs; };
-  services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
-
-  # packages managed outside home-manager
-  #xdg.configFile.nvim = {
-  #  source = mkOutOfStoreSymlink
-  #    "../.config/nvim/init.vim";
-  #  force = true;
-  #};
+  # services.gnome-keyring = import ./services/gnome-keyring.nix { inherit pkgs; };
+  # services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
 
   programs = {
     fzf = import ./programs/fzf.nix { inherit pkgs; };
@@ -62,7 +53,20 @@ in {
     go = import ./programs/go.nix { inherit pkgs; };
     gpg = { enable = true; };
     jq = { enable = true; };
-    neovim = import ./programs/neovim.nix { inherit pkgs; };
     ssh = import ./programs/ssh.nix { inherit pkgs; };
+    yazi = import ./programs/yazi.nix { inherit pkgs; };
   };
+
+  systemd.user.services.dropbox = {
+    Unit = {
+      Description = "Dropbox service";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.dropbox}/bin/dropbox";
+      Restart = "on-failure";
+    };
+};
 }

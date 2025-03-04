@@ -3,12 +3,12 @@
   userName = "edfincham";
   userEmail = "ed.fincham@proton.me";
 
-  signing = {
+  # signing = {
     #key = "/home/${username}/.ssh/id_ed25519";
-    key = "B7275250D05DCC24";
-    signByDefault = true;
-    format = "openpgp";
-  };
+    # key = "B7275250D05DCC24";
+    # signByDefault = true;
+    # format = "openpgp";
+  # };
 
   extraConfig = {
     core = {
@@ -22,9 +22,9 @@
     #   $ echo "ed25519 $(cat ~/.ssh/id_ed25519.pub)" > ~/.ssh/allowed_signers
     #gpg.format = "ssh";
     #gpg.ssh.allowedSignersFile = "/home/${username}/.ssh/allowed_signers";
-    commit.gpgsign = true;
-    tag.gpgsign = true;
-    gpg.program = "gpg";
+    # commit.gpgsign = true;
+    # tag.gpgsign = true;
+    # gpg.program = "gpg";
 
     alias = {
       standup = ''

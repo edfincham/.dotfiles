@@ -4,7 +4,6 @@ Plug 'dense-analysis/ale'
 Plug 'jaromero/vim-monokai-refined'
 Plug 'kien/ctrlp.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-test/vim-test'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-fugitive'
@@ -116,13 +115,6 @@ nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
-
-" vim test
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
 
 " vim-go
 "   The below maps <Ctrl+g>t to new tab for go files (to avoid clash with

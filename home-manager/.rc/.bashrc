@@ -32,9 +32,6 @@ PS1="\[\e[0;32m\]┌─╼\[\e[m\e[0;34m\] $USER \[\e[m\e[0;36m\]\w\[\e[m\]\[\e[
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# bash completion
-. /usr/share/bash-completion/bash_completion
-
 # Powerline configuration
 #   To install run pip3 install powerline-status
 #   Clone https://github.com/powerline/fonts and run ./install.sh
@@ -46,17 +43,11 @@ if [ -f $HOME/.local/lib/python3.8/site-packages/powerline/bindings/bash/powerli
 fi
 
 # fzf for command line fuzzy finder
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+source $(fzf-share)/key-bindings.bash
 
 export PATH=$PATH:/usr/local/go/bin
-export KUBECONFIG="$HOME/.kube/config"
-# export KUBECONFIG="$KUBECONFIG:$HOME/.kube/config-rpi-k3s"
 
-# nix
-[ -f ~/.nix-profile/etc/profile.d/nix.sh ] && source ~/.nix-profile/etc/profile.d/nix.sh
-[ -f ~/.nix-profile/etc/profile.d/hm-session-vars.sh ] && source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-
-. ~/.dotfiles/.rc/.history_conf
-. ~/.dotfiles/.rc/.bash_aliases
-. ~/.dotfiles/.rc/.lazykube
+. ~/.dotfiles/home-manager/.rc/.history_conf
+. ~/.dotfiles/home-manager/.rc/.bash_aliases
+. ~/.dotfiles/home-manager/.rc/.lazykube
 . ~/Dropbox/synced_documents/computer_setup/.bashrc_dropbox
