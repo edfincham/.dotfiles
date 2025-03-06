@@ -4,13 +4,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      (import ./boot-configuration.nix { inherit pkgs; })
     ];
-
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.initrd.luks.devices."luks-bf64ac4a-43d6-47be-9f92-95e76666a599".device = "/dev/disk/by-uuid/bf64ac4a-43d6-47be-9f92-95e76666a599";
+ 
+  # Sound
+  hardware.firmware = [ pkgs.sof-firmware ];
 
   # Networking
   networking.hostName = "nixos";
@@ -84,7 +82,6 @@
     feh
     firefox
     ghostty
-    git
     gnumake
     neovim
     networkmanagerapplet

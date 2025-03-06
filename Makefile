@@ -49,6 +49,7 @@ hm-rebuild:
 nixos-rebuild:
 	@echo "Rebuilding NixOS..."
 	sudo cp nixos/configuration.nix /etc/nixos/configuration.nix
+	sudo cp nixos/boot-configuration.nix /etc/nixos/boot-configuration.nix
 	sudo nixos-rebuild switch
 
 .PHONY: update
@@ -60,6 +61,7 @@ update:
 clean:
 	@echo "Running garbage collection..."
 	nix-collect-garbage -d --verbose
+	sudo nix-collect-garbage --delete-older-than 7d
 
 .PHONY: check
 check:

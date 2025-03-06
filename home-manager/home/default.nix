@@ -24,10 +24,12 @@ in {
     fd
     fzf
     imagemagick
+    gnome-keyring
     go
     keepassxc
     kubectl
     kubectx
+    libcap
     (python310.withPackages (ps: with ps; [
       pip
       numpy
@@ -77,7 +79,7 @@ in {
 
     Service = {
       ExecStart = "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --start --foreground --components=pkcs11,secrets,ssh";
-      Restart = "always";
+      Restart = "on-failure";
     };
 
     Install = {

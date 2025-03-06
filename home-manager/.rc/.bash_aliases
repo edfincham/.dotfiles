@@ -19,9 +19,3 @@ alias la='ls -A'
 alias l='ls -CF'
 alias myip='curl ipinfo.io'
 alias dprune="docker images | grep none | awk '{ print $3; }' | xargs docker rmi"
-
-# git
-git config --global alias.co checkout
-git config --global alias.br branch
-git config --global alias.ci commit
-git config --global alias.st status
