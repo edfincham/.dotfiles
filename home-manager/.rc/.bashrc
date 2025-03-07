@@ -42,12 +42,6 @@ if [ -f $HOME/.local/lib/python3.8/site-packages/powerline/bindings/bash/powerli
     source $HOME/.local/lib/python3.8/site-packages/powerline/bindings/bash/powerline.sh
 fi
 
-# Gnome Keyring
-if [ -n "$DESKTOP_SESSION" ]; then
-  eval $(gnome-keyring-daemon --start)
-  export SSH_AUTH_SOCK
-fi
-
 # fzf for command line fuzzy finder
 source $(fzf-share)/key-bindings.bash
 

@@ -24,7 +24,6 @@ in {
     fd
     fzf
     imagemagick
-    gnome-keyring
     go
     keepassxc
     kubectl
@@ -45,7 +44,6 @@ in {
 
   # Services
   services.blueman-applet.enable = true;
-  # services.gnome-keyring = import ./services/gnome-keyring.nix { inherit pkgs; };
   # services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
 
   programs = {
@@ -69,21 +67,6 @@ in {
     Service = {
       ExecStart = "${pkgs.dropbox}/bin/dropbox";
       Restart = "on-failure";
-    };
-  };
-  systemd.user.services.gnome-keyring = {
-    Unit = {
-      Description = "GNOME Keyring Daemon";
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --start --foreground --components=pkcs11,secrets,ssh";
-      Restart = "on-failure";
-    };
-
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
     };
   };
 }

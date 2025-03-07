@@ -116,6 +116,10 @@
   services.openssh.enable = true;
   services.udisks2.enable = true;
 
+  # Enable GnomeKeyring
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
