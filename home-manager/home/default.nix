@@ -19,6 +19,7 @@ in {
   };
 
   home.packages = with pkgs; [
+    atmos
     clipmenu
     code-cursor
     fd
@@ -29,13 +30,16 @@ in {
     kubectl
     kubectx
     libcap
+    libnotify
     (python310.withPackages (ps: with ps; [
       pip
       numpy
     ]))
     scrot
+    shutter
     stern
-    # terraform
+    terraform
+    opentofu
     # terragrunt
     xclip
 
@@ -47,6 +51,7 @@ in {
   # services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
 
   programs = {
+    autorandr = import ./programs/autorandr.nix { inherit config pkgs; };
     fzf = import ./programs/fzf.nix { inherit pkgs; };
     gh = import ./programs/gh.nix { inherit pkgs; };
     git = import ./programs/git.nix { inherit username lib; };
