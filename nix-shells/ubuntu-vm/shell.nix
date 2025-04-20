@@ -23,6 +23,12 @@ pkgs.mkShell {
     # Additional useful tools
     virtiofsd  # For better shared folder performance
     swtpm  # Virtual TPM emulator if needed
+
+    # Networking
+    iproute2
+    iptables
+    openssl
+    dnsmasq
   ];
 
   # Environment variables
@@ -61,13 +67,18 @@ pkgs.mkShell {
         fi
       fi
 
+      # Find the wireless interface that has the default route
+      WIFI_INTERFACE=$(ip -o -4 route show to default | awk '{print $5}' | head -n1)
+      echo "Using host wireless interface: $WIFI_INTERFACE"
+
       qemu-system-x86_64 \
         -m 4G \
         -smp 2 \
         -enable-kvm \
         -drive file="$VM_DISK",format=qcow2 \
         $cdrom_option \
-        -net nic -net user \
+        -device virtio-net-pci,netdev=net0 \
+        -netdev user,id=net0,hostfwd=tcp::2222-:22,dns=8.8.8.8 \
         -virtfs local,path="$VM_SHARED",mount_tag=shared,security_model=mapped-file,id=shared
     }
   
