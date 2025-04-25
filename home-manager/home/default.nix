@@ -2,6 +2,11 @@
 let
   username = "ed";
   inherit (config.lib.file) mkOutOfStoreSymlink;
+
+  unstable = import inputs.nixpkgs-unstable {
+    system = pkgs.system;
+    config = config.nixpkgs.config;
+  };
 in {
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true;
@@ -16,16 +21,19 @@ in {
   home.sessionVariables = {
     KUBE_EDITOR = "nvim";
     GIT_CONFIG_GLOBAL = "$HOME/.config/git/config";
+    GDK_DPI_SCALE = 1;
   };
 
   home.packages = with pkgs; [
-    atmos
+    azure-cli
     clipmenu
     code-cursor
+    dnsutils
     fd
     fzf
     imagemagick
     go
+    jq
     keepassxc
     kubectl
     kubectx
@@ -48,7 +56,6 @@ in {
 
   # Services
   services.blueman-applet.enable = true;
-  # services.gpg-agent = import ./services/gpg-agent.nix { inherit pkgs; };
 
   programs = {
     autorandr = import ./programs/autorandr.nix { inherit config pkgs; };

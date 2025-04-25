@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixpkgs-poetry-1_8_5.url =
       "github:nixos/nixpkgs/c792c60b8a97daa7efe41a6e4954497ae410e0c1";
@@ -16,6 +17,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-unstable,
     nixpkgs-poetry-1_8_5,
     home-manager,
     ...
@@ -23,6 +25,7 @@
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    unstable = nixpkgs-unstable.legacyPackages.${system};
     inherit (self) outputs;
   in {
     homeConfigurations = {
