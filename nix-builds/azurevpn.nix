@@ -23,16 +23,6 @@
   zenity,
   cacert,
   openvpn,
-# libxcb,
-# cairo-xcb,
-# libX11,
-# libXcomposite,
-# libXdamage,
-# libXext,
-# libXfixes,
-# libXrandr,
-# libxkbcommon,
-# libxshmfence,
 }:
 
 stdenv.mkDerivation rec {
@@ -73,28 +63,11 @@ stdenv.mkDerivation rec {
     curl
     cacert # Add this
     openvpn
-
-    # cairo-xcb
-    # libX11
-    # libXcomposite
-    # libXdamage
-    # libXext
-    # libXfixes
-    # libXrandr
-    # libxkbcommon
-    # libxshmfence
   ];
 
   unpackPhase = ''
     dpkg-deb -x $src .
   '';
-
-  # addAutoPatchelfSearchPath ${jre8}/lib/openjdk/jre/lib/
-  # preBuild = ''
-  #   addAutoPatchelfSearchPath opt/microsoft/microsoft-azurevpnclient/lib
-  # '';
-
-  # runtimeDependencies = [ "$out/lib" ];
 
   installPhase = ''
     mkdir -p $out
@@ -120,8 +93,6 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Microsoft Azure VPN Client";
     homepage = "https://azure.microsoft.com/en-us/services/vpn-gateway/";
-    # TODO:
-    # license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
     maintainers = [ ];
   };
