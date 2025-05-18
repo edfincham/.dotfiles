@@ -44,7 +44,7 @@ pkgs.mkShell {
     VM_DISK="$VM_DIR/ubuntu-disk.qcow2"
     if [ ! -f "$VM_DISK" ]; then
       echo "Creating new VM disk at $VM_DISK"
-      qemu-img create -f qcow2 "$VM_DISK" 30G
+      qemu-img create -f qcow2 "$VM_DISK" 100G
     fi
     
     # Create shared directory
