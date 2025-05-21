@@ -17,6 +17,9 @@ in
   # Networking
   networking.hostName = "nixos";
   networking.wireless.enable = false;  # Disable wpa_supplicant since using networkmanager.
+  networking.networkmanager = {
+    enable = true;
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
@@ -140,7 +143,7 @@ in
   security.pam.services.login.enableGnomeKeyring = true;
   security.pam.services.passwd.enableGnomeKeyring = true;
   services.xserver.windowManager.i3.extraSessionCommands = ''
-    eval $(${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --daemonize)
+    eval $(${pkgs.gnome-keyring}/bin/gnome-keyring-daemon --daemonize)
     export SSH_AUTH_SOCK
   '';
 

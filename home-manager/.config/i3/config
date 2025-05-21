@@ -25,11 +25,6 @@ bindsym $mod+d exec --no-startup-id dmenu_run -i -fn 'Roboto Condensed' -nb '#18
 # Clipboard
 #bindsym $mod+c exec --no-startup-id clipmenu -fn 'Roboto Condensed' -nb '#181818' -sf '#1793d0' -sb '#151515'
 
-# Monitors
-set $monitor1 "eDP-1" # internal screen
-set $monitor2 "DP-1"  # external screen
-bindsym XF86Display exec --no-startup-id sh $HOME/.config/i3/screen.sh $monitor $monitor2
-
 # Change focus
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -140,10 +135,10 @@ for_window [class=".*"] border pixel 0
 # Compton Start
 exec_always --no-startup-id compton --config $HOME/.config/i3/compton.conf -b
 
-# bindsym $mod+KP_Down exec --no-startup-id ~/monty left
-bindsym $mod+KP_Down exec --no-startup-id i3-msg move workspace to output left
-bindsym $mod+Shift+t exec --no-startup-id i3-msg move workspace to output up
-bindsym $mod+KP_Up exec --no-startup-id monty right
+bindsym $mod+Shift+u exec --no-startup-id i3-msg move workspace to output up
+bindsym $mod+Shift+d exec --no-startup-id i3-msg move workspace to output down
+bindsym $mod+Shift+l exec --no-startup-id i3-msg move workspace to output left
+bindsym $mod+Shift+r exec --no-startup-id i3-msg move workspace to output right
 
 # Switch to workspace
 bindsym $mod+1 workspace 1:I

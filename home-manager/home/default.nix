@@ -47,7 +47,6 @@ in {
     shutter
     stern
     terraform
-    opentofu
     # terragrunt
     xclip
 
