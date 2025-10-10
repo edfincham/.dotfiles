@@ -1,14 +1,14 @@
-{ config, pkgs, lib, ... }:
-
-let 
-  azureVpn = pkgs.callPackage /home/ed/.dotfiles/nix-builds/azurevpn.nix {};
-in
-{
+{ config, pkgs, lib, inputs, ... }:
+let
+  unstable = import <nixpkgs-unstable> {
+    system = pkgs.system;
+    config = config.nixpkgs.config;
+  };
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       (import ./boot-configuration.nix { inherit pkgs; })
-      (import ./hardware-camera.nix { inherit pkgs config; })
     ];
  
   # Sound
@@ -84,10 +84,12 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alsa-utils
+    unstable.claude-code
     dpkg
     feh
     firefox
-    gcc
+    gcc14
+    gcc14.cc.lib
     glibc
     gnumake
     pkg-config
@@ -112,11 +114,11 @@ in
     vlc
     wireguard-tools
     wget
-
-    # Azure VPN Custom Build
-    azureVpn
-    openresolv
   ];
+
+  environment.variables = {
+    LD_LIBRARY_PATH = "${pkgs.gcc14.cc.lib}/lib:${pkgs.lib.makeLibraryPath [ pkgs.zlib pkgs.glibc ]}";
+  };
 
   nix = {
     settings = {
@@ -152,40 +154,6 @@ in
   services.xrdp.defaultWindowManager = "gnome-remote-desktop";
   services.xrdp.openFirewall = true;
 
-
-  environment.etc."ssl/certs/DigiCert_Global_Root_G2.pem".text = ''
------BEGIN CERTIFICATE-----
-MIIDjjCCAnagAwIBAgIQAzrx5qcRqaC7KGSxHQn65TANBgkqhkiG9w0BAQsFADBh
-MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
-d3cuZGlnaWNlcnQuY29tMSAwHgYDVQQDExdEaWdpQ2VydCBHbG9iYWwgUm9vdCBH
-MjAeFw0xMzA4MDExMjAwMDBaFw0zODAxMTUxMjAwMDBaMGExCzAJBgNVBAYTAlVT
-MRUwEwYDVQQKEwxEaWdpQ2VydCBJbmMxGTAXBgNVBAsTEHd3dy5kaWdpY2VydC5j
-b20xIDAeBgNVBAMTF0RpZ2lDZXJ0IEdsb2JhbCBSb290IEcyMIIBIjANBgkqhkiG
-9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzfNNNx7a8myaJCtSnX/RrohCgiN9RlUyfuI
-2/Ou8jqJkTx65qsGGmvPrC3oXgkkRLpimn7Wo6h+4FR1IAWsULecYxpsMNzaHxmx
-1x7e/dfgy5SDN67sH0NO3Xss0r0upS/kqbitOtSZpLYl6ZtrAGCSYP9PIUkY92eQ
-q2EGnI/yuum06ZIya7XzV+hdG82MHauVBJVJ8zUtluNJbd134/tJS7SsVQepj5Wz
-tCO7TG1F8PapspUwtP1MVYwnSlcUfIKdzXOS0xZKBgyMUNGPHgm+F6HmIcr9g+UQ
-vIOlCsRnKPZzFBQ9RnbDhxSJITRNrw9FDKZJobq7nMWxM4MphQIDAQABo0IwQDAP
-BgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBhjAdBgNVHQ4EFgQUTiJUIBiV
-5uNu5g/6+rkS7QYXjzkwDQYJKoZIhvcNAQELBQADggEBAGBnKJRvDkhj6zHd6mcY
-1Yl9PMWLSn/pvtsrF9+wX3N3KjITOYFnQoQj8kVnNeyIv/iPsGEMNKSuIEyExtv4
-NeF22d+mQrvHRAiGfzZ0JFrabA0UWTW98kndth/Jsw1HKj2ZL7tcu7XUIOGZX1NG
-Fdtom/DzMNU+MeKNhJ7jitralj41E6Vf8PlwUHBHQRFXGU7Aj64GxJUTFy8bJZ91
-8rGOmaFvE7FBcf6IKshPECBV1/MUReXgRPTqh5Uykw7+U0b6LJ3/iyK5S9kJRaTe
-pLiaWN0bfVKfjllDiIGknibVb63dDcY3fe0Dkhvld1927jyNxF1WW6LZZm6zNTfl
-MrY=
------END CERTIFICATE-----
-  '';
-  security.wrappers = {
-    microsoft-azurevpnclient = {
-      owner = "root";
-      group = "root";
-      capabilities = "cap_net_admin,cap_net_raw,cap_net_bind_service,cap_setpcap,cap_setuid,cap_setgid,cap_sys_admin+ep";
-      source = "${azureVpn}/bin/microsoft-azurevpnclient";
-    };
-  };
-
   services.resolved = {
     enable = true;
     dnssec = "false";
@@ -204,86 +172,6 @@ MrY=
       BusName = "org.freedesktop.resolve1";
     };
   };
-
-  services.dbus.packages = [
-    pkgs.gnome-keyring
-    (pkgs.writeTextFile {
-      name = "azurevpn-dbus-policy";
-      destination = "/share/dbus-1/system.d/org.freedesktop.resolve1.AzureVPN.conf";
-      text = ''
-        <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
-        "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
-        <busconfig>
-          <policy user="root">
-            <allow own="org.freedesktop.resolve1"/>
-            <allow send_destination="org.freedesktop.resolve1"/>
-          </policy>
-
-          <!-- Allow all users to set DNS -->
-          <policy context="default">
-            <allow send_destination="org.freedesktop.resolve1"
-                   send_interface="org.freedesktop.resolve1.Manager"
-                   send_member="SetLinkDNS"/>
-            <allow send_destination="org.freedesktop.resolve1"
-                   send_interface="org.freedesktop.resolve1.Manager"
-                   send_member="SetLinkDomains"/>
-            <allow send_destination="org.freedesktop.resolve1"
-                   send_interface="org.freedesktop.resolve1.Manager"
-                   send_member="SetLinkDefaultRoute"/>
-            <allow send_destination="org.freedesktop.resolve1"
-                   send_interface="org.freedesktop.resolve1.Manager"
-                   send_member="RevertLink"/>
-            <!-- Add these additional permissions -->
-            <allow send_destination="org.freedesktop.resolve1"
-                   send_interface="org.freedesktop.DBus.Properties"
-                   send_member="Get"/>
-            <allow send_destination="org.freedesktop.resolve1"
-                   send_interface="org.freedesktop.DBus.Properties"
-                   send_member="GetAll"/>
-            <allow send_destination="org.freedesktop.resolve1"
-                   send_interface="org.freedesktop.DBus.Introspectable"
-                   send_member="Introspect"/>
-            <allow send_destination="org.freedesktop.resolve1"
-                   send_interface="org.freedesktop.DBus.Peer"
-                   send_member="Ping"/>
-          </policy>
-
-          <!-- Specific policy for your user -->
-          <policy user="ed">
-            <allow send_destination="org.freedesktop.resolve1"/>
-          </policy>
-        </busconfig>
-      '';
-    })
-  ];
-
-  security.polkit.extraConfig = ''
-    polkit.addRule(function(action, subject) {
-      if (action.id.indexOf("org.freedesktop.resolve1.") == 0 ||
-          action.id.indexOf("org.freedesktop.NetworkManager.") == 0) {
-        if (subject.programPath &&
-            (subject.programPath.indexOf("microsoft-azurevpnclient") >= 0 ||
-             subject.programPath.indexOf("openvpn") >= 0)) {
-          return polkit.Result.YES;
-        }
-
-        if (subject.local && subject.active && subject.isInGroup("networkmanager")) {
-          return polkit.Result.YES;
-        }
-      }
-
-      if (action.id == "org.freedesktop.resolve1.set-dns-servers" ||
-          action.id == "org.freedesktop.resolve1.set-domains" ||
-          action.id == "org.freedesktop.resolve1.set-default-route" ||
-          action.id == "org.freedesktop.resolve1.set-link-dns" ||
-          action.id == "org.freedesktop.resolve1.set-link-domains" ||
-          action.id == "org.freedesktop.resolve1.set-link-default-route" ||
-          action.id == "org.freedesktop.resolve1.revert-link") {
-        return polkit.Result.YES;
-      }
-    });
-  '';
 
   # Allow VPN traffic
   networking.firewall = {
