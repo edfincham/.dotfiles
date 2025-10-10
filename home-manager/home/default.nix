@@ -27,7 +27,7 @@ in {
   home.packages = with pkgs; [
     azure-cli
     clipmenu
-    code-cursor
+    unstable.code-cursor
     dnsutils
     fd
     fzf
@@ -39,6 +39,8 @@ in {
     kubectx
     libcap
     libnotify
+    peek
+    pgadmin
     (python310.withPackages (ps: with ps; [
       pip
       numpy
