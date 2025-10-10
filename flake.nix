@@ -5,8 +5,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixpkgs-poetry-1_8_5.url =
-      "github:nixos/nixpkgs/c792c60b8a97daa7efe41a6e4954497ae410e0c1";
+    nixpkgs-poetry-2_1_2.url =
+      "github:NixOS/nixpkgs/1cb1c02a6b1b7cf67e3d7731cbbf327a53da9679";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -18,7 +18,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
-    nixpkgs-poetry-1_8_5,
+    nixpkgs-poetry-2_1_2,
     home-manager,
     ...
   }@inputs:

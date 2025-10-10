@@ -47,10 +47,10 @@ in {
     shutter
     stern
     terraform
-    # terragrunt
+    tmux
     xclip
 
-    inputs.nixpkgs-poetry-1_8_5.legacyPackages.${pkgs.system}.poetry
+    inputs.nixpkgs-poetry-2_1_2.legacyPackages.${pkgs.system}.poetry
   ];
 
   # Services
