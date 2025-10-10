@@ -51,3 +51,4 @@ export PATH=$PATH:/usr/local/go/bin
 . ~/.dotfiles/home-manager/.rc/.bash_aliases
 . ~/.dotfiles/home-manager/.rc/.lazykube
 . ~/Dropbox/synced_documents/computer_setup/.bashrc_dropbox
+. ~/.nix-profile/etc/profile.d/hm-session-vars.sh

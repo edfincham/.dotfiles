@@ -111,7 +111,7 @@ bar {
         # status_command exec $HOME/src/github.com/i3status-components/bin/i3br
         strip_workspace_numbers yes
         font pango: Source Code Pro for Powerline, Icon, Hiragino Kaku Gothic Pro 12
-        #tray_output none
+        tray_output primary
         separator_symbol " | "
         position top
         colors {
