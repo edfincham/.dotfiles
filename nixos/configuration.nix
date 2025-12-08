@@ -4,22 +4,26 @@ let
     system = pkgs.system;
     config = config.nixpkgs.config;
   };
-in {
+in
+{
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      (import ./boot-configuration.nix { inherit pkgs; })
+      # (import ./boot-configuration.nix { inherit pkgs; })
     ];
- 
-  # Sound
-  hardware.firmware = [ pkgs.sof-firmware ];
 
-  # Networking
-  networking.hostName = "nixos";
-  networking.wireless.enable = false;  # Disable wpa_supplicant since using networkmanager.
-  networking.networkmanager = {
-    enable = true;
-  };
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.luks.devices."luks-f317b828-ba2f-418e-a6aa-a12f0f31c3d5".device = "/dev/disk/by-uuid/f317b828-ba2f-418e-a6aa-a12f0f31c3d5";
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Stockholm";
@@ -66,6 +70,28 @@ in {
   # Configure console keymap
   console.keyMap = "uk";
 
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable sound with pipewire.
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
   # Enable Docker
   virtualisation.docker.enable = true;
 
@@ -77,19 +103,26 @@ in {
     packages = with pkgs; [];
   };
 
+  # Enable automatic login for the user.
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "ed";
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Enable dynamically linked executables
+  programs.nix-ld.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alsa-utils
-    unstable.claude-code
     dpkg
     feh
     firefox
     gcc14
     gcc14.cc.lib
+    git
     glibc
     gnumake
     pkg-config
@@ -103,6 +136,7 @@ in {
     pciutils
     pkgs.gnome-remote-desktop
     pkgs.xrdp
+    python3
     remmina
     picom
     rofi
@@ -110,6 +144,7 @@ in {
     slack
     tree
     unzip
+    uv
     v4l-utils
     vlc
     wireguard-tools
@@ -149,34 +184,26 @@ in {
     export SSH_AUTH_SOCK
   '';
 
-  # XRDP?
-  services.xrdp.enable = true;
-  services.xrdp.defaultWindowManager = "gnome-remote-desktop";
-  services.xrdp.openFirewall = true;
-
-  services.resolved = {
-    enable = true;
-    dnssec = "false";
-    domains = [ "~." ];
-    fallbackDns = [ "1.1.1.1" "8.8.8.8" ];
-    extraConfig = ''
-      DNSStubListener=yes
-      ResolveUnicastSingleLabel=yes
-      Cache=yes
-    '';
-  };
-
-  systemd.services.systemd-resolved = {
-    serviceConfig = {
-      SupplementaryGroups = [ "systemd-network" ];
-      BusName = "org.freedesktop.resolve1";
-    };
-  };
-
   # Allow VPN traffic
   networking.firewall = {
     allowedUDPPorts = [ 1194 ];
     checkReversePath = false;
+  };
+
+  # In your configuration.nix
+  systemd.services.i3lock-before-sleep = {
+    description = "Lock screen before suspend";
+    before = [ "sleep.target" ];
+    wantedBy = [ "sleep.target" ];
+    environment = {
+      DISPLAY = ":0";
+    };
+    serviceConfig = {
+      User = "ed";  # Replace with your username
+      Type = "forking";
+      ExecStart = "${pkgs.bash}/bin/sh /home/ed/.config/i3/lock.sh";
+      TimeoutStartSec = "infinity";
+    };
   };
 
   # Open ports in the firewall.
@@ -191,5 +218,6 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 }
+
