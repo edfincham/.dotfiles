@@ -16,7 +16,7 @@ in {
 
   home.username = username;
   home.homeDirectory = "/home/${username}";
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
   home.file.".bashrc".text = builtins.readFile ../.rc/.bashrc;
   home.sessionVariables = {
     KUBE_EDITOR = "nvim";
@@ -27,6 +27,7 @@ in {
   home.packages = with pkgs; [
     azure-cli
     clipmenu
+    unstable.claude-code
     unstable.code-cursor
     dnsutils
     fd
@@ -37,14 +38,11 @@ in {
     keepassxc
     kubectl
     kubectx
+    (pkgs.wrapHelm pkgs.kubernetes-helm { plugins = [ pkgs.kubernetes-helmPlugins.helm-secrets ]; })
     libcap
     libnotify
     peek
     pgadmin
-    (python310.withPackages (ps: with ps; [
-      pip
-      numpy
-    ]))
     scrot
     shutter
     stern
