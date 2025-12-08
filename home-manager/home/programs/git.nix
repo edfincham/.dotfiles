@@ -58,7 +58,9 @@
       co = "checkout";
       st = "status";
       ci = "commit";
+      ca = "commit --amend";
       br = "branch";
+      pf = "push --force";
     };
 
     "includeIf \"gitdir:~/northvolt/\"" = {
