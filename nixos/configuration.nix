@@ -9,18 +9,10 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      # (import ./boot-configuration.nix { inherit pkgs; })
+      ./laptop-configuration.nix
     ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices."luks-f317b828-ba2f-418e-a6aa-a12f0f31c3d5".device = "/dev/disk/by-uuid/f317b828-ba2f-418e-a6aa-a12f0f31c3d5";
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  networking.hostName = "nixos";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -42,11 +34,6 @@ in
     LC_TELEPHONE = "sv_SE.UTF-8";
     LC_TIME = "sv_SE.UTF-8";
   };
-
-  # Enable Bluetooth and Bluetooth manager
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  services.blueman.enable = true;
 
   # Configure i3 and X11
   services.displayManager.defaultSession = "none+i3";
