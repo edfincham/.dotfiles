@@ -76,8 +76,15 @@ in
     #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  # Bambu
+  xdg.portal.enable = true;
+  services.flatpak.enable = true;
+  # services.flatpak = {
+  #   enable = true;
+  #   packages = [
+  #     { appId = "com.bambulab.BambuStudio"; origin = "flathub"; }
+  #   ];
+  # };
 
   # Enable Docker
   virtualisation.docker.enable = true;
