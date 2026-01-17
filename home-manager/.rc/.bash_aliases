@@ -17,5 +17,5 @@ alias ls='ls --color=auto'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias myip='curl ipinfo.io'
+alias myip='curl ipinfo.io/ip'
 alias dprune="docker images | grep none | awk '{ print $3; }' | xargs docker rmi"
