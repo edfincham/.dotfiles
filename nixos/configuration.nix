@@ -178,27 +178,16 @@ in
     export SSH_AUTH_SOCK
   '';
 
+  # Tailscale
+  services.tailscale.enable = true;
+
   # Allow VPN traffic
   networking.firewall = {
     allowedUDPPorts = [ 1194 ];
+    trustedInterfaces = [ "tailscale0" ];
     checkReversePath = false;
   };
 
-  # In your configuration.nix
-  systemd.services.i3lock-before-sleep = {
-    description = "Lock screen before suspend";
-    before = [ "sleep.target" ];
-    wantedBy = [ "sleep.target" ];
-    environment = {
-      DISPLAY = ":0";
-    };
-    serviceConfig = {
-      User = "ed";  # Replace with your username
-      Type = "forking";
-      ExecStart = "${pkgs.bash}/bin/sh /home/ed/.config/i3/lock.sh";
-      TimeoutStartSec = "infinity";
-    };
-  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
