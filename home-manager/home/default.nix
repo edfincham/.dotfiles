@@ -42,6 +42,7 @@ in {
     (pkgs.wrapHelm pkgs.kubernetes-helm { plugins = [ pkgs.kubernetes-helmPlugins.helm-secrets ]; })
     libcap
     libnotify
+    lsof
     peek
     pgadmin
     scrot

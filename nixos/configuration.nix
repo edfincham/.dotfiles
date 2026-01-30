@@ -145,10 +145,6 @@ in
     wget
   ];
 
-  environment.variables = {
-    LD_LIBRARY_PATH = "${pkgs.gcc14.cc.lib}/lib:${pkgs.lib.makeLibraryPath [ pkgs.zlib pkgs.glibc ]}";
-  };
-
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
