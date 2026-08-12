@@ -50,6 +50,7 @@ nixos-rebuild:
 	@echo "Rebuilding NixOS..."
 	sudo cp nixos/configuration.nix /etc/nixos/configuration.nix
 	sudo cp nixos/laptop-configuration.nix /etc/nixos/laptop-configuration.nix
+	sudo cp nixos/pi-instances.nix /etc/nixos/pi-instances.nix
 	sudo nixos-rebuild switch
 
 .PHONY: update

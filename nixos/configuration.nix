@@ -10,6 +10,7 @@ in
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./laptop-configuration.nix
+      ./pi-instances.nix
     ];
 
   networking.hostName = "nixos";
