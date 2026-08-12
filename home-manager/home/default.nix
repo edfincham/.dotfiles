@@ -27,12 +27,13 @@ in {
   home.packages = with pkgs; [
     azure-cli
     clipmenu
-    unstable.claude-code
     unstable.code-cursor
+    dbeaver-bin
     dnsutils
     fd
     fzf
     imagemagick
+    ghostty
     go
     jq
     keepassxc
@@ -62,6 +63,7 @@ in {
     autorandr = import ./programs/autorandr.nix { inherit config pkgs; };
     fzf = import ./programs/fzf.nix { inherit pkgs; };
     gh = import ./programs/gh.nix { inherit pkgs; };
+    ghostty = import ./programs/ghostty.nix { inherit pkgs; };
     git = import ./programs/git.nix { inherit username lib; };
     go = import ./programs/go.nix { inherit pkgs; };
     gpg = { enable = true; };
