@@ -1,14 +1,15 @@
 { config, pkgs, lib, inputs, ... }:
 let
-  unstable = import <nixpkgs-unstable> {
-    system = pkgs.system;
+  unstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs) system;
     config = config.nixpkgs.config;
   };
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [ # Machine-specific hardware scan (disk UUIDs) stays out of git; read
+      # impurely from its canonical location. Requires `--impure`.
+      /etc/nixos/hardware-configuration.nix
       ./laptop-configuration.nix
       ./pi-instances.nix
     ];

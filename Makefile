@@ -47,11 +47,8 @@ hm-rebuild:
 
 .PHONY: nixos-rebuild
 nixos-rebuild:
-	@echo "Rebuilding NixOS..."
-	sudo cp nixos/configuration.nix /etc/nixos/configuration.nix
-	sudo cp nixos/laptop-configuration.nix /etc/nixos/laptop-configuration.nix
-	sudo cp nixos/pi-instances.nix /etc/nixos/pi-instances.nix
-	sudo nixos-rebuild switch
+	@echo "Rebuilding NixOS from flake..."
+	sudo nixos-rebuild switch --flake .#nixos --impure
 
 .PHONY: update
 update:
@@ -67,12 +64,12 @@ clean:
 .PHONY: check
 check:
 	@echo "Checking flake..."
-	nix flake check
+	nix flake check --impure
 
 .PHONY: reboot
 reboot:
-	@echo "Updating and rebooting NixOS"
-	sudo nixos-rebuild boot --upgrade
+	@echo "Staging NixOS flake build for next boot (run 'make update' first to bump inputs)"
+	sudo nixos-rebuild boot --flake .#nixos --impure
 
 
 .DEFAULT_GOAL := help

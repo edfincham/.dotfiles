@@ -3,8 +3,7 @@
 {
   # Boot configuration
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices."luks-$UUID".device = "/dev/disk/by-uuid/$UUID";
+  boot.loader.efi.canTouchEfiVariables = false; # temp
 
   # Bluetooth configuration
   hardware.bluetooth.enable = true;
