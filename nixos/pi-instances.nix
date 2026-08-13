@@ -96,7 +96,9 @@ in
 {
   users.groups.pi = { };
 
-  environment.systemPackages = [ piAdmin piSpawn piLs piRm ];
+  # pi itself (from the pi.nix overlay) + the instance-management helpers,
+  # available system-wide so every pi-<name> user gets `pi` on PATH.
+  environment.systemPackages = [ pkgs.pi-coding-agent piAdmin piSpawn piLs piRm ];
 
   # Tightly scoped passwordless sudo for ed:
   #   - run the single pi-admin binary as root (create/remove accounts)
