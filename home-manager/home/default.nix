@@ -7,17 +7,58 @@ let
     system = pkgs.system;
     config = config.nixpkgs.config;
   };
+  nvimTools = with unstable; [
+    neovim
+    ripgrep
+    bash-language-server
+    buf
+    cue
+    dockerfile-language-server
+    docker-compose-language-service
+    gopls
+    helm-ls
+    vscode-json-languageserver
+    lua-language-server
+    nixd
+    opentofu
+    ruff
+    superhtml
+    templ
+    tflint
+    tofu-ls
+    typescript
+    ty
+    yaml-language-server
+    rust-analyzer
+    rustc
+    cargo
+    rustfmt
+  ];
 in {
+  imports = [
+    # Herdr has no `programs.herdr` HM module, so its config is a plain module
+    # imported here rather than an entry in the `programs = { ... }` block below.
+    ./programs/herdr.nix
+  ];
+
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true;
 
   xdg.enable = true;
   xdg.configFile."i3/config".source = ../.config/i3/config;
+  # Make autorandr match displays by EDID for all invocations
+  # (systemd service, udev hotplug and manual `autorandr --change`).
+  xdg.configFile."autorandr/settings.ini".text = ''
+    [config]
+    match-edid=1
+  '';
 
   home.username = username;
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "25.05";
   home.file.".bashrc".text = builtins.readFile ../.rc/.bashrc;
+  # ~/.pi is a plain symlink to home-manager/.pi (see Makefile init);
+  # pi mutates files in there, so it's kept out of home-manager.
   home.sessionVariables = {
     KUBE_EDITOR = "nvim";
     GIT_CONFIG_GLOBAL = "$HOME/.config/git/config";
@@ -46,18 +87,19 @@ in {
     lsof
     peek
     pgadmin
+    postman
     scrot
     shutter
     stern
     terraform
     tmux
     xclip
-
-    inputs.nixpkgs-poetry-2_1_2.legacyPackages.${pkgs.system}.poetry
-  ];
+    inputs.herdr-nix.packages.${pkgs.system}.default
+  ] ++ nvimTools;
 
   # Services
   services.blueman-applet.enable = true;
+  services.autorandr.matchEdid = true;
 
   programs = {
     autorandr = import ./programs/autorandr.nix { inherit config pkgs; };
