@@ -1,25 +1,23 @@
 {
   description = "nix config";
 
-  # Binary caches for pi (github:lukasl-dev/pi.nix). Honoured on rebuild via
-  # `--accept-flake-config`; also mirrored into nix.settings for later ops.
   nixConfig = {
     extra-substituters = [
       "https://pi.cachix.org"
       "https://nix-community.cachix.org"
+      "https://herdr.cachix.org"
     ];
     extra-trusted-public-keys = [
       "pi.cachix.org-1:lGeoGJaZ5ZDabuRzkcD5EBTNnDM4HJ1vqeOxlWk1Flk="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "herdr.cachix.org-1:3nH7IStRsS0ASfdonA0DCRR2ZrSCeWitZ7Kwew0cR4I="
     ];
   };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    nixpkgs-poetry-2_1_2.url =
-      "github:NixOS/nixpkgs/1cb1c02a6b1b7cf67e3d7731cbbf327a53da9679";
+    herdr-nix.url = "github:herdrdev/herdr-nix";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -33,7 +31,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
-    nixpkgs-poetry-2_1_2,
+    herdr-nix,
     home-manager,
     ...
   }@inputs:
