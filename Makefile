@@ -30,6 +30,8 @@ init:
 		[ -d ~/.config/$$c ] && rm -rf ~/.config/$$c || true; \
 		ln -sf $(PWD)/home-manager/.config/$$c ~/.config/$$c; \
 	done
+	@echo "Creating Symlink for pi to ~"
+	@ln -sfn $(PWD)/home-manager/.pi ~/.pi
 
 .PHONY: sync
 sync:

@@ -1,0 +1,33 @@
+{
+  "lastChangelogVersion": "1.3.0",
+  "theme": "dark/dark",
+  "defaultProvider": "openai",
+  "defaultModel": "gpt-6-sol",
+  "defaultThinkingLevel": "xhigh",
+  "defaultProjectTrust": "always",
+  "quietStartup": true,
+  "collapseChangelog": true,
+  "retry": {
+    "enabled": true,
+    "maxRetries": 10
+  },
+  "enabledModels": [
+    "claude-fable-*",
+    "claude-opus-*",
+    "claude-sonnet-*",
+    "gpt-6*"
+  ],
+  "packages": [
+    "npm:pi-web-access",
+    "npm:pi-mcp-adapter",
+    "npm:@dietrichgebert/ponytail",
+    "npm:pi-subagents",
+    "npm:pi-simplify",
+    "npm:pi-x-ide",
+    "npm:pi-mermaid"
+  ],
+  "hideThinkingBlock": false,
+  "extensions": [
+    "-builtin:mcp"
+  ]
+}

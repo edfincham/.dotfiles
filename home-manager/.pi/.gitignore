@@ -1,0 +1,11 @@
+# pi runtime state / secrets — only config is tracked
+/agent/auth.json
+/agent/sessions/
+/agent/npm/
+/agent/bin/
+/agent/mcp-cache.json
+/agent/models-store.json
+/agent/logs/
+*.bak
+/agent/extensions/herdr-agent-state.ts
+/agent/mcp-adapter.json
