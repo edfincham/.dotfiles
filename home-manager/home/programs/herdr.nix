@@ -52,8 +52,9 @@
         focus_pane_up = "prefix+k";
         focus_pane_right = "prefix+l";
 
-        # Close the focused pane (Herdr default).
+        # Close or fullscreen the focused pane.
         close_pane = "prefix+x";
+        fullscreen = "prefix+f";
       };
     };
 }
