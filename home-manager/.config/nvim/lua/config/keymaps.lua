@@ -1,4 +1,5 @@
 vim.api.nvim_create_user_command("Qa", "qa", {})
+vim.cmd([[cnoreabbrev <expr> ffb getcmdtype() ==# ':' && getcmdline() ==# 'ffb' ? 'FzfLua buffers' : 'ffb']])
 
 vim.keymap.set("n", "<C-l>", "<C-l><cmd>nohlsearch<cr><cmd>match<cr><cmd>diffupdate<cr>", { silent = true })
 

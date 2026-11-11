@@ -1,6 +1,7 @@
 assert(vim.g.colors_name == "hybrid")
 assert(vim.o.termguicolors and vim.o.foldmethod == "indent" and vim.o.foldlevelstart == 999)
 assert(vim.fn.exists(":Qa") == 2)
+assert(vim.fn.maparg("ffb", "c", true, true).rhs:find("FzfLua buffers", 1, true))
 assert(vim.fn.maparg("<C-l>", "n") ~= "" and vim.fn.maparg("<A-Left>", "n") ~= "")
 assert(vim.fn.maparg("<Space>?", "n") ~= "")
 assert(vim.fn.maparg("<C-n>", "n") == "" and vim.fn.maparg("<C-t>", "n") == "")
