@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 let
   unstable = import inputs.nixpkgs-unstable {
     inherit (pkgs) system;
@@ -96,7 +96,7 @@ in
     isNormalUser = true;
     description = "Ed";
     extraGroups = [ "systemd-network" "network" "networkmanager" "wheel" "docker"  "audio" "video" ];
-    packages = with pkgs; [];
+    packages = [];
   };
 
   # Enable automatic login for the user.
@@ -108,6 +108,10 @@ in
 
   # Enable dynamically linked executables
   programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    stdenv.cc.cc.lib
+    zlib
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -116,22 +120,22 @@ in
     dpkg
     feh
     firefox
+    freecad
     gcc14
     gcc14.cc.lib
     git
     glibc
     gnumake
-    pkg-config
-    ghostty
     gnome-keyring
     gnumake
-    neovim
     networkmanagerapplet
     ninja
     openssh
     pciutils
+    pkg-config
     pkgs.gnome-remote-desktop
     pkgs.xrdp
+    postgresql
     python3
     remmina
     picom
@@ -140,7 +144,7 @@ in
     slack
     tree
     unzip
-    uv
+    unstable.uv
     v4l-utils
     vlc
     wireguard-tools
@@ -192,7 +196,7 @@ in
   # Allow VPN traffic
   networking.firewall = {
     allowedUDPPorts = [ 1194 ];
-    trustedInterfaces = [ "tailscale0" ];
+    trustedInterfaces = [ "tailscale0" "docker0" ];
     checkReversePath = false;
   };
 
