@@ -79,8 +79,8 @@ bindsym XF86AudioMute exec --no-startup-id amixer -q set Master toggle
 bindsym XF86AudioMicMute exec --no-startup-id amixer -q set Capture toggle
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 
 exec --no-startup-id ~/.dropbox-dist/dropboxd &
 exec --no-startup-id i3-msg 'workspace 1:I; exec keepassxc'

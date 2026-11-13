@@ -67,6 +67,7 @@ in {
 
   home.packages = with pkgs; [
     azure-cli
+    brightnessctl
     clipmenu
     unstable.code-cursor
     dbeaver-bin
