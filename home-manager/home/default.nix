@@ -46,6 +46,23 @@ in {
 
   xdg.enable = true;
   xdg.configFile."i3/config".source = ../.config/i3/config;
+  xdg.configFile."polybar/config.ini".source = ../.config/polybar/config.ini;
+  xdg.configFile."polybar/calendar.sh" = {
+    source = ../.config/polybar/calendar.sh;
+    executable = true;
+  };
+  xdg.configFile."polybar/launch.sh" = {
+    source = ../.config/polybar/launch.sh;
+    executable = true;
+  };
+  xdg.configFile."polybar/vpn.sh" = {
+    source = ../.config/polybar/vpn.sh;
+    executable = true;
+  };
+  xdg.configFile."polybar/cpu.sh" = {
+    source = ../.config/polybar/cpu.sh;
+    executable = true;
+  };
   # Make autorandr match displays by EDID for all invocations
   # (systemd service, udev hotplug and manual `autorandr --change`).
   xdg.configFile."autorandr/settings.ini".text = ''
@@ -86,15 +103,19 @@ in {
     libcap
     libnotify
     lsof
+    ncdu
     peek
     pgadmin
     postman
+    (polybar.override { i3Support = true; })
     scrot
     shutter
     stern
     terraform
     tmux
     xclip
+    xdotool
+    yad
     inputs.herdr-nix.packages.${pkgs.system}.default
   ] ++ nvimTools;
 

@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   enable = true;
+  hooks.postswitch.polybar = "${config.xdg.configHome}/polybar/launch.sh";
   profiles = {
     "office" = {
       fingerprint = {

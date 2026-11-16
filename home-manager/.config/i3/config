@@ -67,8 +67,8 @@ bindsym $mod+space focus mode_toggle
 for_window [class="^.*"] border pixel 0
 
 # Gap settings
-gaps inner 20
-gaps outer 5
+gaps inner 0
+gaps outer 0
 
 # Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q set Master 5%+ unmute
@@ -103,27 +103,10 @@ bindsym $mod+Shift+s exec --no-startup-id gnome-control-center
 exec_always --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings
 client.focused #1793d0 #1793d0 #FFFFFF #1793d0 #1793d0
 
-# Start i3bar to display a workspace bar 
-set $base1 #363537
-set $base2 #1793d0
-bar {
-        status_command i3status
-        # status_command exec $HOME/src/github.com/i3status-components/bin/i3br
-        strip_workspace_numbers yes
-        font pango: Source Code Pro for Powerline, Icon, Hiragino Kaku Gothic Pro 12
-        tray_output primary
-        separator_symbol " | "
-        position top
-        colors {
-            background $base1
-                statusline #fbfef9
-                separator #808080
-                focused_workspace $base1 $base2 #F1F1F1
-                active_workspace $base1 $base1 #797979 
-                inactive_workspace $base1 $base1 $base2
-                urgent_workspace $base1 $base1 #EA4C59
-        }
-}
+for_window [class="Yad" title="polybar-calendar"] floating enable
+
+# Polybar provides the workspace bar and status modules.
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Start i3 tray
 exec_always --no-startup-id $HOME/.config/i3/tray.sh
