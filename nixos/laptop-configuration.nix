@@ -4,6 +4,7 @@
   # Boot configuration
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false; # temp
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Bluetooth configuration
   hardware.bluetooth.enable = true;
